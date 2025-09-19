@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Report: Employee Retention at ABC Tech Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Corporate Calm -->
+    <!-- Application Structure Plan: The application is structured as a multi-section, single-page dashboard with tab-based navigation. This design was chosen to break down the dense, multi-stage research process into logical, digestible segments (Overview, Problem, Framework, Methodology, Proposal). This non-linear structure allows users to explore the report based on their interest, rather than being forced through a linear document. The flow starts with a high-level visual summary (Overview) to grasp the core issue, then allows deep dives into the problem's definition, the theoretical framework, the approaches considered, and the final detailed proposal. This enhances usability by making complex information accessible and explorable. -->
+    <!-- Visualization & Content Choices: 
+    - Attrition Data (Report Info) -> Goal: Show change over time -> Viz: Bar Chart -> Interaction: Hover tooltips -> Justification: Clearly visualizes the sharp increase from 15% to 30%, making the problem's scale immediately apparent. Library: Chart.js (Canvas).
+    - Exit Interview Reasons (Report Info) -> Goal: Show proportions of a whole -> Viz: Donut Chart -> Interaction: Click on a segment to display detailed text -> Justification: Interactively presents qualitative data, making it more engaging and allowing users to explore the primary drivers of turnover. Library: Chart.js (Canvas).
+    - Research Variables (Report Info) -> Goal: Organize & show relationships -> Viz: Diagram of interconnected boxes -> Interaction: Click to reveal details -> Justification: Creates a conceptual map of the study's framework, which is more intuitive than a simple list, clarifying the links between different variable types. Method: HTML/CSS (Tailwind).
+    - Research Proposal (Report Info) -> Goal: Organize dense text -> Viz: Accordion sections -> Interaction: Click to expand/collapse -> Justification: Prevents overwhelming the user with a wall of text, making the detailed proposal scannable and accessible. Method: HTML/JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            border-bottom-color: #3b82f6;
+            color: #1e3a8a;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Employee Retention Challenge</h1>
+            <p class="text-lg text-slate-600 mt-2">A Research Methodology Study for ABC Tech Solutions Ltd.</p>
+            <div class="mt-4 text-xs text-slate-500">
+                <p class="font-semibold">By: Siddhant Pradhan, Vanshika Jain, Disha Waghmare, Rhea Tyagi</p>
+                <p>Under the guidance of Dr. Pushkar Phadtare</p>
+            </div>
+        </header>
+
+        <nav class="bg-white rounded-lg shadow-sm mb-8 sticky top-2 z-10">
+            <ul class="flex justify-center items-center flex-wrap p-2">
+                <li><a href="#overview" class="nav-link active font-semibold text-slate-600 py-3 px-4 md:px-6 block">Overview</a></li>
+                <li><a href="#problem" class="nav-link font-semibold text-slate-600 py-3 px-4 md:px-6 block">Problem Definition</a></li>
+                <li><a href="#framework" class="nav-link font-semibold text-slate-600 py-3 px-4 md:px-6 block">Research Framework</a></li>
+                <li><a href="#methodology" class="nav-link font-semibold text-slate-600 py-3 px-4 md:px-6 block">Methodology</a></li>
+                <li><a href="#proposal" class="nav-link font-semibold text-slate-600 py-3 px-4 md:px-6 block">Research Proposal</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="overview" class="content-section active">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">The Attrition Crisis at a Glance</h2>
+                    <p class="text-slate-600 mb-8">
+                        ABC Tech Solutions Ltd., a firm with 3000 employees, is facing a critical challenge. Employee turnover has doubled in the last year, leading to increased costs, reduced efficiency, and damage to the company's reputation. This interactive overview visualizes the core problem and the primary reasons cited by departing employees.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center">
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-blue-800">Total Employees</h3>
+                            <p class="text-4xl font-bold text-blue-900">3,000</p>
+                        </div>
+                        <div class="bg-yellow-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-yellow-800">Previous Attrition Rate</h3>
+                            <p class="text-4xl font-bold text-yellow-900">15%</p>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-red-800">Current Attrition Rate</h3>
+                            <p class="text-4xl font-bold text-red-900">30%</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-slate-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold text-center text-slate-700 mb-4">Attrition Rate Growth</h3>
+                            <div class="chart-container h-80 max-h-96">
+                                <canvas id="attritionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg">
+                             <h3 class="text-xl font-semibold text-center text-slate-700 mb-4">Key Drivers of Turnover</h3>
+                             <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="chart-container h-64 w-64 md:h-80 md:w-80">
+                                    <canvas id="reasonsChart"></canvas>
+                                </div>
+                                <div id="reasonDetail" class="flex-1 bg-white p-4 rounded-md min-h-[150px] border border-slate-200">
+                                    <h4 class="font-bold text-slate-800">Click a segment to see details</h4>
+                                    <p class="text-slate-600 mt-2">Insights from exit interviews highlight several areas of concern that contribute to employees leaving the company.</p>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Defining the Core Problem</h2>
+                    <p class="text-slate-600 mb-8">
+                        To address the high turnover, we must first translate the business challenge into a clear, researchable problem. This section outlines the management dilemma, the overarching management question, and the specific research questions that will guide our systematic investigation into the root causes of attrition at ABC Tech.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold text-slate-700 mb-2">1. Management Dilemma</h3>
+                            <p class="text-slate-600">How can ABC Tech Solutions effectively reduce the high rate of employee turnover to improve operational stability, reduce costs, and restore its reputation as a preferred employer, despite initial efforts like salary hikes and bonuses proving insufficient?</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold text-slate-700 mb-2">2. Management Question</h3>
+                            <p class="text-slate-600">What are the primary drivers of employee turnover at ABC Tech Solutions, and what strategic interventions can be implemented to significantly improve employee retention?</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold text-slate-700 mb-2">3. Research Questions</h3>
+                            <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                <li>What is the impact of compensation and benefits packages on an employee's intention to stay with ABC Tech Solutions?</li>
+                                <li>To what extent do career growth opportunities (or lack thereof) influence an employee's decision to leave the company?</li>
+                                <li>How does workload and work-life balance affect employee job satisfaction and their likelihood to seek alternative employment?</li>
+                                <li>What is the relationship between management practices (e.g., communication, recognition, support) and employee loyalty at the firm?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="framework" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Conceptual Framework and Hypotheses</h2>
+                    <p class="text-slate-600 mb-8">
+                        This section outlines the theoretical structure of our study. The interactive diagram below illustrates the relationship between different types of variables we will investigate. Following the diagram, we present three testable hypotheses that formalize our assumptions about the key drivers of employee retention. Click on the variable types to learn more.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                             <h3 class="text-xl font-semibold text-slate-700 mb-4">Variable Relationship Model</h3>
+                             <div class="flex flex-col items-center p-4 space-y-4 bg-slate-50 rounded-lg">
+                                <div data-variable="independent" class="variable-box cursor-pointer bg-blue-100 text-blue-800 p-3 rounded-md w-full text-center font-semibold border-2 border-blue-200 hover:bg-blue-200">Independent Variables</div>
+                                <div class="text-2xl text-slate-400">→</div>
+                                <div data-variable="mediating" class="variable-box cursor-pointer bg-green-100 text-green-800 p-3 rounded-md w-full text-center font-semibold border-2 border-green-200 hover:bg-green-200">Mediating Variable</div>
+                                <div class="text-2xl text-slate-400">→</div>
+                                <div data-variable="dependent" class="variable-box cursor-pointer bg-red-100 text-red-800 p-3 rounded-md w-full text-center font-semibold border-2 border-red-200 hover:bg-red-200">Dependent Variable</div>
+                                <div class="text-2xl text-slate-400">↑</div>
+                                <div data-variable="moderating" class="variable-box cursor-pointer bg-yellow-100 text-yellow-800 p-3 rounded-md w-full text-center font-semibold border-2 border-yellow-200 hover:bg-yellow-200">Moderating Variable</div>
+                             </div>
+                        </div>
+                        <div id="variable-details" class="bg-slate-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-slate-800 text-lg">Variable Definitions</h4>
+                            <p class="text-slate-600 mt-2">Click on a variable type in the diagram to see the specific factors being investigated in this study.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                         <h3 class="text-xl font-semibold text-slate-700 mb-4">Testable Hypotheses</h3>
+                         <div class="space-y-4">
+                             <div class="bg-slate-50 p-4 rounded-lg">
+                                 <p class="font-semibold text-slate-800">Hypothesis 1 (H1):</p>
+                                 <p class="text-slate-600">Higher perceived opportunities for career growth are negatively associated with an employee's intention to leave ABC Tech Solutions.</p>
+                             </div>
+                             <div class="bg-slate-50 p-4 rounded-lg">
+                                 <p class="font-semibold text-slate-800">Hypothesis 2 (H2):</p>
+                                 <p class="text-slate-600">Supportive management practices positively influence job satisfaction, which in turn reduces employee turnover intention.</p>
+                             </div>
+                             <div class="bg-slate-50 p-4 rounded-lg">
+                                 <p class="font-semibold text-slate-800">Hypothesis 3 (H3):</p>
+                                 <p class="text-slate-600">The negative relationship between high workload and intention to leave is stronger for employees with longer tenure at the company.</p>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="methodology" class="content-section">
+                 <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Research Approach</h2>
+                    <p class="text-slate-600 mb-8">
+                        The choice of research approach—deductive or inductive—shapes how we form conclusions. A deductive approach starts with a theory and tests it with data, while an inductive approach starts with data and builds a new theory. For the complex issue at ABC Tech, both can be valuable, either separately or in a mixed-method design.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-slate-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold text-slate-700 mb-3">Deductive Approach (Theory-Testing)</h3>
+                            <p class="text-slate-600 mb-4">This approach begins with established theories of employee retention (e.g., Herzberg's Two-Factor Theory, Job Demands-Resources model). We would use these theories to formulate our hypotheses about salary, growth, and management.</p>
+                            <p class="font-semibold text-slate-700">Application at ABC Tech:</p>
+                            <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                                <li>Develop a structured survey based on existing theoretical constructs.</li>
+                                <li>Administer the survey to a large sample of current employees.</li>
+                                <li>Use statistical analysis (like regression) to test if our hypotheses are supported by the data.</li>
+                                <li>The goal is to confirm or reject pre-defined theories in the context of this specific company.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold text-slate-700 mb-3">Inductive Approach (Theory-Building)</h3>
+                            <p class="text-slate-600 mb-4">This approach is more exploratory and starts with collecting data without preconceived hypotheses. We would look for patterns, themes, and categories directly from the employee's own words and experiences.</p>
+                             <p class="font-semibold text-slate-700">Application at ABC Tech:</p>
+                            <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                                <li>Conduct in-depth, open-ended interviews or focus groups with a smaller group of employees (both current and recently departed).</li>
+                                <li>Analyze the qualitative data to identify emerging themes and patterns unique to ABC Tech's culture.</li>
+                                <li>Develop a new, grounded theory or model that explains the specific dynamics of turnover at the company.</li>
+                                <li>This could uncover unexpected issues not covered by existing general theories.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="proposal" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Detailed Research Proposal</h2>
+                    <p class="text-slate-600 mb-8">
+                        This proposal outlines a structured plan to investigate the employee retention challenges at ABC Tech Solutions. It details the study's title, background, objectives, chosen research design, and the expected deliverables that will provide actionable insights to the management team. Use the sections below to explore the full proposal.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="accordion-item bg-slate-50 rounded-lg border border-slate-200">
+                            <button class="accordion-header w-full text-left p-4 font-semibold text-slate-700 flex justify-between items-center">
+                                1. Title of the Study
+                                <span class="accordion-icon text-xl font-light">+</span>
+                            </button>
+                            <div class="accordion-content px-4 pb-4">
+                                <p class="text-slate-600">"Analyzing the Drivers of Employee Turnover and Formulating a Strategic Retention Framework for ABC Tech Solutions Ltd."</p>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-slate-50 rounded-lg border border-slate-200">
+                            <button class="accordion-header w-full text-left p-4 font-semibold text-slate-700 flex justify-between items-center">
+                                2. Introduction and Background
+                                <span class="accordion-icon text-xl font-light">+</span>
+                            </button>
+                            <div class="accordion-content px-4 pb-4">
+                                <p class="text-slate-600">ABC Tech Solutions Ltd., a mid-sized IT services company, is currently facing a significant operational and financial challenge due to a sharp increase in its annual employee attrition rate, which has escalated from a stable 15% to an alarming 30% over the past 12 months. This high turnover rate poses a multi-faceted threat, including escalating recruitment and training costs, diminished project efficiency, negative impacts on client satisfaction, and damage to the company's employer brand. Preliminary data from exit interviews suggests a combination of factors, including compensation, career development, workload, and management practices. This research aims to move beyond these surface-level insights to conduct a systematic investigation into the root causes and provide a data-driven foundation for effective retention strategies.</p>
+                            </div>
+                        </div>
+
+                         <div class="accordion-item bg-slate-50 rounded-lg border border-slate-200">
+                            <button class="accordion-header w-full text-left p-4 font-semibold text-slate-700 flex justify-between items-center">
+                                3. Objectives of the Study
+                                <span class="accordion-icon text-xl font-light">+</span>
+                            </button>
+                            <div class="accordion-content px-4 pb-4">
+                                <ul class="list-disc list-inside text-slate-600 space-y-2">
+                                    <li>To identify and quantify the primary factors contributing to the high employee turnover at ABC Tech Solutions.</li>
+                                    <li>To analyze the relative importance of compensation, career growth, workload, and management practices on an employee's decision to stay or leave.</li>
+                                    <li>To investigate the role of job satisfaction as a mediator between these factors and turnover intention.</li>
+                                    <li>To develop a set of actionable, data-driven recommendations for the leadership team to improve employee retention.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                         <div class="accordion-item bg-slate-50 rounded-lg border border-slate-200">
+                            <button class="accordion-header w-full text-left p-4 font-semibold text-slate-700 flex justify-between items-center">
+                                4. Choice of Research Design
+                                <span class="accordion-icon text-xl font-light">+</span>
+                            </button>
+                            <div class="accordion-content px-4 pb-4">
+                                <p class="text-slate-600">A mixed-methods research design will be employed to gain a comprehensive understanding of the issue. This approach combines the strengths of both quantitative and qualitative methods.</p>
+                                <p class="font-semibold text-slate-700 mt-3">Phase 1: Quantitative (Deductive)</p>
+                                <p class="text-slate-600">An anonymous online survey will be administered to all 3000 employees. The survey will use validated scales to measure perceptions of compensation, career growth, workload, management support, job satisfaction, and turnover intention. This will allow for statistical analysis to test our hypotheses and identify broad trends.</p>
+                                <p class="font-semibold text-slate-700 mt-3">Phase 2: Qualitative (Inductive)</p>
+                                <p class="text-slate-600">Following the survey analysis, semi-structured interviews will be conducted with a purposive sample of 20-30 employees from different departments and tenure levels. These interviews will provide deep, contextual insights behind the quantitative results, exploring nuances and uncovering issues that the survey may not capture.</p>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-slate-50 rounded-lg border border-slate-200">
+                            <button class="accordion-header w-full text-left p-4 font-semibold text-slate-700 flex justify-between items-center">
+                                5. Possible Outcome & Deliverables
+                                <span class="accordion-icon text-xl font-light">+</span>
+                            </button>
+                            <div class="accordion-content px-4 pb-4">
+                                <p class="text-slate-600">The study will culminate in a comprehensive research report and a presentation to the leadership team. The key deliverables will include:</p>
+                                <ul class="list-disc list-inside text-slate-600 space-y-2 mt-2">
+                                    <li><strong>A Retention Driver Model:</strong> A statistical model identifying and ranking the most significant predictors of employee turnover at ABC Tech.</li>
+                                    <li><strong>Employee Segmentation Analysis:</strong> An analysis identifying if certain employee segments (e.g., by department, role, tenure) are at a higher risk of leaving and why.</li>
+                                    <li><strong>A Strategic Recommendations Matrix:</strong> A prioritized list of actionable recommendations categorized by area (e.g., Compensation & Benefits, Career Pathing, Management Training, Work-Life Balance Initiatives). Each recommendation will be linked directly to the research findings.</li>
+                                    <li><strong>An Implementation Roadmap:</strong> A suggested timeline and framework for rolling out the proposed interventions, including key performance indicators (KPIs) to track success (e.g., a target to reduce attrition to 20% within 18 months).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 py-4 border-t border-slate-200">
+            <p class="text-sm text-slate-500">Research Methodology Assignment | Submission Date: 30-09-2025</p>
+        </footer>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    function showSection(hash) {
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.hash === hash);
+        });
+        contentSections.forEach(section => {
+            section.classList.toggle('active', section.id === hash.substring(1));
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            history.pushState(null, null, targetId);
+            showSection(targetId);
+        });
+    });
+    
+    const initialHash = window.location.hash || '#overview';
+    showSection(initialHash);
+
+
+    const attritionCtx = document.getElementById('attritionChart').getContext('2d');
+    new Chart(attritionCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Last Year', 'This Year'],
+            datasets: [{
+                label: 'Annual Attrition Rate (%)',
+                data: [15, 30],
+                backgroundColor: ['rgba(251, 191, 36, 0.6)', 'rgba(239, 68, 68, 0.6)'],
+                borderColor: ['rgba(251, 191, 36, 1)', 'rgba(239, 68, 68, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 35,
+                    title: {
+                        display: true,
+                        text: 'Percentage (%)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const reasonsData = {
+        labels: ['Better Salary', 'Lack of Growth', 'High Workload', 'Management Issues'],
+        datasets: [{
+            data: [40, 30, 20, 10],
+            backgroundColor: ['#3b82f6', '#10b981', '#f97316', '#ef4444'],
+        }]
+    };
+    
+    const reasonDetails = {
+        'Better Salary': {
+            title: 'Better Salary Packages',
+            description: 'A significant portion of departing employees cited more competitive compensation packages from other firms as their primary reason for leaving. This suggests that while ABC Tech has increased salaries, they may not yet be at market parity.'
+        },
+        'Lack of Growth': {
+            title: 'Lack of Career Growth',
+            description: 'Employees feel there is a lack of clear career progression and development opportunities. The absence of a visible path for advancement leads skilled individuals to seek growth elsewhere.'
+        },
+        'High Workload': {
+            title: 'High Workload and Burnout',
+            description: 'Persistent high workload is leading to employee burnout and a poor work-life balance. This unsustainable pressure is a major factor pushing employees to leave.'
+        },
+        'Management Issues': {
+            title: 'Dissatisfaction with Management',
+            description: 'Issues with management practices, including poor communication, lack of support, and insufficient recognition, are contributing to a negative work environment and driving attrition.'
+        }
+    };
+
+    const reasonsCtx = document.getElementById('reasonsChart').getContext('2d');
+    const reasonsChart = new Chart(reasonsCtx, {
+        type: 'doughnut',
+        data: reasonsData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed + '%';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const chartElement = elements[0];
+                    const index = chartElement.index;
+                    const label = reasonsData.labels[index];
+                    const detail = reasonDetails[label];
+                    const detailContainer = document.getElementById('reasonDetail');
+                    
+                    detailContainer.innerHTML = `
+                        <h4 class="font-bold text-slate-800">${detail.title}</h4>
+                        <p class="text-slate-600 mt-2">${detail.description}</p>
+                    `;
+                }
+            }
+        }
+    });
+    
+    const variableBoxes = document.querySelectorAll('.variable-box');
+    const detailsContainer = document.getElementById('variable-details');
+    const variableInfo = {
+        independent: {
+            title: 'Independent Variables (Causes)',
+            description: 'These are the factors we believe are the primary causes influencing the outcome. They are manipulated or observed to see their effect on the dependent variable.',
+            items: ['Compensation Package', 'Career Growth Opportunities', 'Workload', 'Management Practices']
+        },
+        mediating: {
+            title: 'Mediating Variable (The "How")',
+            description: 'This variable explains the process or mechanism through which the independent variables influence the dependent variable.',
+            items: ['Job Satisfaction']
+        },
+        dependent: {
+            title: 'Dependent Variable (Outcome)',
+            description: 'This is the main outcome or effect that we are interested in explaining and predicting.',
+            items: ['Employee Turnover Intention']
+        },
+        moderating: {
+            title: 'Moderating Variable (The "When" or "For Whom")',
+            description: 'This variable affects the strength or direction of the relationship between an independent and a dependent variable.',
+            items: ['Employee Tenure']
+        }
+    };
+    
+    variableBoxes.forEach(box => {
+        box.addEventListener('click', () => {
+            const varType = box.dataset.variable;
+            const info = variableInfo[varType];
+            
+            let itemsHtml = info.items.map(item => `<li class="text-slate-600">${item}</li>`).join('');
+            
+            detailsContainer.innerHTML = `
+                <h4 class="font-bold text-slate-800 text-lg">${info.title}</h4>
+                <p class="text-slate-600 mt-2 text-sm">${info.description}</p>
+                <ul class="list-disc list-inside mt-3 space-y-1">${itemsHtml}</ul>
+            `;
+        });
+    });
+
+    const accordions = document.querySelectorAll('.accordion-item');
+    accordions.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        const content = item.querySelector('.accordion-content');
+        const icon = item.querySelector('.accordion-icon');
+        
+        header.addEventListener('click', () => {
+            const isOpen = content.style.maxHeight;
+            
+            accordions.forEach(otherItem => {
+                otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                otherItem.querySelector('.accordion-icon').textContent = '+';
+            });
+            
+            if (!isOpen) {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = '−';
+            } else {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
